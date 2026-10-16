@@ -1,0 +1,89 @@
+# Dependabot fuer bookstack-mcp-server
+#
+# MCP-Server fuer BookStack, ohne Lockfile (Alerts stammen aus package.json).
+# Ermittelt am 16.10.2026: npm, Dockerfile plus docker-compose.yml im Root, zwei Workflows.
+#
+# Monatlich statt woechentlich, Deckel 3 - dieses Repo aendert sich
+# selten, haeufigere Laeufe erzeugen hier nur Rauschen.
+#
+# Der Deckel gilt NUR fuer Version-Updates. Security-Update-PRs sind
+# laut GitHub-Doku unbegrenzt und zaehlen nicht dagegen.
+
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "07:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+    groups:
+      # Alle Security-Fixes dieses Oekosystems in EINEN PR.
+      sicherheit:
+        applies-to: security-updates
+        patterns:
+          - "*"
+      # Alles Uebrige gebuendelt. Majors bleiben aussen vor und
+      # kommen weiterhin als eigene PRs.
+      minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "07:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "docker"
+    groups:
+      # Alle Security-Fixes dieses Oekosystems in EINEN PR.
+      sicherheit:
+        applies-to: security-updates
+        patterns:
+          - "*"
+      # Alles Uebrige gebuendelt. Majors bleiben aussen vor und
+      # kommen weiterhin als eigene PRs.
+      minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "07:00"
+      timezone: "Europe/Berlin"
+    labels:
+      - "dependencies"
+      - "github_actions"
+    groups:
+      # Alle Security-Fixes dieses Oekosystems in EINEN PR.
+      sicherheit:
+        applies-to: security-updates
+        patterns:
+          - "*"
+      # Alles Uebrige gebuendelt. Majors bleiben aussen vor und
+      # kommen weiterhin als eigene PRs.
+      minor-and-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"

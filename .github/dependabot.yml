@@ -1,6 +1,8 @@
 # Dependabot fuer bookstack-mcp-server
 #
-# MCP-Server fuer BookStack, ohne Lockfile (Alerts stammen aus package.json).
+# MCP-Server fuer BookStack, verwaltet mit Bun (bun.lock).
+# Oekosystem "bun", nicht "npm": npm_and_yarn kann bun.lock nicht
+# aktualisieren und scheiterte seit 07.10.2026 bei jedem Sicherheits-Job.
 # Ermittelt am 16.10.2026: npm, Dockerfile plus docker-compose.yml im Root, zwei Workflows.
 #
 # Monatlich statt woechentlich, Deckel 3 - dieses Repo aendert sich
@@ -12,7 +14,7 @@
 version: 2
 
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "bun"
     directory: "/"
     schedule:
       interval: "monthly"
